@@ -73,13 +73,13 @@ img { max-width: 100%; }
 .hero-copy h1 { font-size: clamp(2.4rem, 4.6vw, 3.6rem); font-weight: 700; letter-spacing: -.01em; line-height: 1.15; margin: 4px 0 20px; }
 .hero-copy p { max-width: 460px; font-size: 1.05rem; line-height: 1.65; color: var(--muted); margin: 0 0 28px; }
 .hero-cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.hero-visual { position: relative; width: 100%; max-width: 360px; margin-left: auto; aspect-ratio: 9/16; border-radius: var(--radius); background: var(--bg-alt); display: flex; align-items: flex-end; justify-content: center; padding: 24px; overflow: hidden; }
-.hero-ribbon { position: absolute; right: 16px; top: 16px; z-index: 1; background: var(--green); color: var(--white); font-weight: 700; font-size: .74rem; text-transform: uppercase; letter-spacing: .03em; padding: 8px 14px; border-radius: 999px; box-shadow: var(--shadow-sm); }
+.hero-visual { position: relative; width: 100%; max-width: 480px; margin-left: auto; display: flex; align-items: flex-end; justify-content: center; padding-top: 46px; }
+.hero-ribbon { position: absolute; right: 6%; top: 0; z-index: 1; background: var(--green); color: var(--white); font-weight: 700; font-size: .74rem; text-transform: uppercase; letter-spacing: .03em; padding: 8px 14px; border-radius: 999px; box-shadow: var(--shadow-sm); }
 .photo-slot { width: 100%; height: 100%; min-height: inherit; display: grid; place-items: center; text-align: center; padding: 32px; border-radius: inherit; background: repeating-linear-gradient(-45deg, transparent 0 15px, rgba(17,17,17,.03) 15px 30px); }
 .photo-slot span { max-width: 220px; font-weight: 600; line-height: 1.4; text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; opacity: .5; }
 .scribble { display: none; }
-.hero-jars { display: flex; flex-direction: row; align-items: flex-end; justify-content: center; gap: 8px; width: 100%; }
-.hero-jars img { width: 24%; object-fit: contain; filter: drop-shadow(0 10px 14px rgba(17,17,17,.14)); }
+.hero-jars { display: flex; flex-direction: row; align-items: flex-end; justify-content: center; gap: 6px; width: 100%; }
+.hero-jars img { width: 28%; object-fit: contain; filter: drop-shadow(0 10px 14px rgba(17,17,17,.14)); }
 .ingredient { display: none; }
 
 .feature-strip { border-bottom: 1px solid var(--line); background: var(--bg); }
