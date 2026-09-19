@@ -10,6 +10,7 @@ const products = [
 const state = {
   cart: JSON.parse(localStorage.getItem('mubis-cart') || '[]').filter(item=>products.some(product=>product.id===item.id)),
   homeCategory: 'pickles',
+  popCategory: 'pickles',
   shopCategory: 'all',
   sort: 'featured',
   selectedSize: {},
@@ -82,13 +83,65 @@ function featureStrip(){ return `<section class="feature-strip"><div class="cont
   <div class="feature-item"><span class="feature-icon">→</span>Free shipping over ₹799</div>
   </div></section>`; }
 
+function bestSellersCarousel(){
+  const list=products.slice(0,6);
+  return `<section class="carousel-band">
+    <div class="container carousel-head">
+      <h2 class="display">Our best sellers</h2>
+      <div class="carousel-arrows">
+        <button class="arrow-btn" data-carousel-prev aria-label="Previous">←</button>
+        <button class="arrow-btn" data-carousel-next aria-label="Next">→</button>
+      </div>
+    </div>
+    <div class="carousel-track" id="carousel-track">${list.map(p=>`<a href="#/product/${p.id}" class="carousel-item">
+        <span class="carousel-badges">${p.tags.slice(0,2).map(t=>`<span class="carousel-badge">${t}</span>`).join('')}</span>
+        <img src="${p.image}" alt="${p.name} jar">
+        <span class="carousel-overlay"><span class="carousel-name">${p.name}</span><span class="carousel-price">${money(p.price)}</span></span>
+      </a>`).join('')}</div>
+    <p class="carousel-tagline">The legend. The original.<br>From our kitchen to yours.</p>
+    <div class="carousel-cta"><a href="#/shop" class="btn btn-light">Shop now</a></div>
+  </section>`;
+}
+
+function popCollection(){
+  const swatches=['#C0392B','#FF8C1A','#FFC93C','#2E7D32'];
+  const items=products.filter(p=>p.category===state.popCategory).slice(0,4);
+  return `<section class="section pop-section"><div class="container">
+    <div class="section-head centered"><span class="eyebrow">The collection</span><h2 class="display">Pop Collection</h2><div class="toggle-row"><button class="chip ${state.popCategory==='pickles'?'active':''}" data-pop-cat="pickles">Pickles</button><button class="chip ${state.popCategory==='bundles'?'active':''}" data-pop-cat="bundles">Bundles</button></div></div>
+    <div class="pop-grid">${items.map((p,i)=>`<a href="#/product/${p.id}" class="pop-card" style="background:${swatches[i%swatches.length]}"><img src="${p.image}" alt="${p.name}"><span class="pop-label">${p.name}</span></a>`).join('')}</div>
+  </div></section>`;
+}
+
+function infoBanner(){ return `<section class="info-banner"><div class="container info-banner-inner">
+  <h2 class="display info-headline">Leave store-bought pickles behind.</h2>
+  <div class="floating-tags">
+    <span class="float-tag tag-a">Small Batch</span>
+    <span class="float-tag tag-b">No Preservatives</span>
+    <span class="float-tag tag-c">Made Fresh</span>
+    <span class="float-tag tag-d">100% Natural</span>
+  </div>
+  <img class="info-jar" src="./1-product.png" alt="Mubi's Kitchen jar">
+  </div></section>`; }
+
+function ugcShowcase(){
+  const shapes=['ugc-round','ugc-torn','ugc-tilt','ugc-blob'];
+  return `<section class="section ugc-section"><div class="container">
+  <div class="section-head centered"><span class="eyebrow">Community</span><h2 class="display">Tag @mubiskitchen</h2><p>Show us your jar in the wild — we love seeing Mubi's on your table.</p></div>
+  <div class="ugc-grid">${products.slice(0,4).map((p,i)=>`<div class="ugc-item ${shapes[i]}" style="--delay:${i*0.12}s"><img src="${p.image}" alt="${p.name} shared by a customer"></div>`).join('')}</div>
+  </div></section>`;
+}
+
 function home(){
   const list=products.filter(p=>p.category===state.homeCategory).slice(0,4);
   return `${header()}<main id="main">
   <section class="hero"><div class="container hero-inner"><div class="hero-copy"><span class="eyebrow">Made at home · Shared with joy</span><h1 class="display">Real ingredients.<br>Happier meals.</h1><p>Small-batch pickles with bold, honest flavour. Made slowly with traditional recipes and ingredients your grandmother would recognise.</p><a href="#/shop" class="btn btn-primary">Shop now</a></div><div class="hero-visual"><div class="hero-jars">${products.filter(p=>p.category==='pickles').map(p=>`<img src="${p.image}" alt="${p.name} jar">`).join('')}</div></div></div></section>
   ${featureStrip()}
+  ${bestSellersCarousel()}
   <section class="section products-wrap"><div class="container"><div class="section-head centered"><span class="eyebrow">Choose your happy</span><h2 class="display">A little pop in every bite</h2><div class="toggle-row"><button class="pill ${state.homeCategory==='pickles'?'active':''}" data-home-cat="pickles">Pickles</button><button class="pill ${state.homeCategory==='bundles'?'active':''}" data-home-cat="bundles">Bundles</button></div></div><div class="products-scroll"><div class="product-grid home-products">${list.map(p=>productCard(p)).join('')}</div></div></div></section>
+  ${popCollection()}
+  ${infoBanner()}
   <section class="section story"><div class="container story-grid"><div class="story-visual"><div class="photo-slot"><span>Founder / kitchen photo placeholder<br>Drop your image here</span></div></div><div class="story-copy"><span class="eyebrow">The recipe behind the jar</span><h2 class="display">Made with memory.</h2><p>It started with recipes passed around the family table, handwritten in the margins and adjusted by instinct. We bottle that feeling: bright ingredients, patient hands, and food that makes an ordinary meal feel special.</p><a class="text-link" href="#/about">Read our story →</a></div></div></section>
+  ${ugcShowcase()}
   ${newsletter()}</main>${footer()}`;
 }
 
@@ -138,6 +191,17 @@ function bind(){
   document.querySelector('[data-menu]')?.addEventListener('click',()=>document.querySelector('#nav').classList.toggle('open'));
   document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>addToCart(b.dataset.add,Number(b.dataset.qty||1))));
   document.querySelectorAll('[data-home-cat]').forEach(b=>b.addEventListener('click',()=>{state.homeCategory=b.dataset.homeCat;render()}));
+  document.querySelectorAll('[data-pop-cat]').forEach(b=>b.addEventListener('click',()=>{state.popCategory=b.dataset.popCat;render()}));
+  const track=document.querySelector('#carousel-track');
+  if(track){
+    document.querySelector('[data-carousel-prev]')?.addEventListener('click',()=>track.scrollBy({left:-track.clientWidth*0.8,behavior:'smooth'}));
+    document.querySelector('[data-carousel-next]')?.addEventListener('click',()=>track.scrollBy({left:track.clientWidth*0.8,behavior:'smooth'}));
+  }
+  const ugcItems=document.querySelectorAll('.ugc-item');
+  if(ugcItems.length){
+    const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.2});
+    ugcItems.forEach(el=>io.observe(el));
+  }
   document.querySelectorAll('[data-shop-cat]').forEach(b=>b.addEventListener('click',()=>{state.shopCategory=b.dataset.shopCat;render()}));
   document.querySelector('[data-sort]')?.addEventListener('change',e=>{state.sort=e.target.value;render()});
   document.querySelectorAll('[data-size]').forEach(b=>b.addEventListener('click',()=>{state.selectedSize[b.dataset.product]=b.dataset.size;render()}));
