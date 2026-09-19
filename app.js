@@ -89,8 +89,8 @@ function bestSellersCarousel(){
     <div class="container carousel-head">
       <h2 class="display">Our best sellers</h2>
       <div class="carousel-arrows">
-        <button class="arrow-btn" data-carousel-prev aria-label="Previous">←</button>
-        <button class="arrow-btn" data-carousel-next aria-label="Next">→</button>
+        <button class="arrow-btn" data-carousel-prev="carousel-track" aria-label="Previous">←</button>
+        <button class="arrow-btn" data-carousel-next="carousel-track" aria-label="Next">→</button>
       </div>
     </div>
     <div class="carousel-track" id="carousel-track">${list.map(p=>`<a href="#/product/${p.id}" class="carousel-item">
@@ -123,25 +123,66 @@ function infoBanner(){ return `<section class="info-banner"><div class="containe
   <img class="info-jar" src="./1-product.png" alt="Mubi's Kitchen jar">
   </div></section>`; }
 
-function ugcShowcase(){
-  const shapes=['ugc-round','ugc-torn','ugc-tilt','ugc-blob'];
-  return `<section class="section ugc-section"><div class="container">
-  <div class="section-head centered"><span class="eyebrow">Community</span><h2 class="display">Tag @mubiskitchen</h2><p>Show us your jar in the wild — we love seeing Mubi's on your table.</p></div>
-  <div class="ugc-grid">${products.slice(0,4).map((p,i)=>`<div class="ugc-item ${shapes[i]}" style="--delay:${i*0.12}s"><img src="${p.image}" alt="${p.name} shared by a customer"></div>`).join('')}</div>
+const reelCaptions=['Morning pickle mood 🌞','Small-batch magic ✨','Straight from the jar','Grandma-approved 👵','Weekend snack sorted'];
+function ugcReels(){
+  const list=products.slice(0,5);
+  return `<section class="section reels-section"><div class="container">
+    <div class="section-head centered"><span class="eyebrow">Community</span><h2 class="display">Watch the real-life reactions</h2><p>Tag @mubiskitchen — we love seeing our jars on your table.</p></div>
+  </div>
+  <div class="reels-wrap">
+    <button class="arrow-btn reels-arrow left" data-carousel-prev="reels-track" aria-label="Previous">←</button>
+    <div class="reel-track" id="reels-track">${list.map((p,i)=>`<div class="reel-item">
+        <span class="reel-caption">${reelCaptions[i%reelCaptions.length]}</span>
+        <button class="reel-play" aria-label="Play video">▶</button>
+        <img src="${p.image}" alt="${p.name} in use">
+        <a href="#/product/${p.id}" class="reel-tag"><img src="${p.image}" alt=""><span>${p.name}<br><b>${money(p.price)}</b></span></a>
+      </div>`).join('')}</div>
+    <button class="arrow-btn reels-arrow right" data-carousel-next="reels-track" aria-label="Next">→</button>
+    <div class="testimonial-card">
+      <button class="testimonial-close" aria-label="Dismiss" onclick="this.closest('.testimonial-card').style.display='none'">×</button>
+      <img class="testimonial-thumb" src="./1-product.png" alt="Beef Pickle">
+      <div class="testimonial-body">
+        <span class="testimonial-name">Ritika S. <span class="testimonial-stars">★★★★★</span></span>
+        <p>Tastes just like my grandmother's — the beef pickle disappeared from the fridge in two days. Ordering three more jars!</p>
+        <span class="testimonial-product">Beef Pickle (400g)</span>
+      </div>
+    </div>
+  </div></section>`;
+}
+
+function faqSection(){
+  const faqs=[
+    ['How fast will my order be delivered?','Orders usually leave our kitchen in 2–3 working days and arrive within 4–7 days across most of India.'],
+    ['Do you use any preservatives?','No — every jar is made fresh in small batches with no added preservatives, ever.'],
+    ['Can I put together a custom bundle?','Yes! Reach out on the contact page and we\'ll help you build a bundle for your favourites.'],
+    ['What if my jar arrives damaged?','Write to us with a photo within 48 hours of delivery and we\'ll send a free replacement, no questions asked.']
+  ];
+  return `<section class="section faq-section"><div class="container faq-grid">
+    <div>
+      <span class="eyebrow">Good to know</span>
+      <h2 class="display">Frequently asked questions</h2>
+      <div class="accordion faq-accordion">${faqs.map(([q,a],i)=>`<div class="accordion-item ${i===0?'open':''}"><button class="accordion-button"><span>${q}</span><span class="plus">＋</span></button><div class="accordion-content">${a}</div></div>`).join('')}</div>
+    </div>
+    <div class="faq-visual"><img src="./1.png" alt="Mubi's Kitchen jar"></div>
   </div></section>`;
 }
 
 function home(){
   const list=products.filter(p=>p.category===state.homeCategory).slice(0,4);
   return `${header()}<main id="main">
-  <section class="hero"><div class="container hero-inner"><div class="hero-copy"><span class="eyebrow">Made at home · Shared with joy</span><h1 class="display">Real ingredients.<br>Happier meals.</h1><p>Small-batch pickles with bold, honest flavour. Made slowly with traditional recipes and ingredients your grandmother would recognise.</p><a href="#/shop" class="btn btn-primary">Shop now</a></div><div class="hero-visual"><div class="hero-jars">${products.filter(p=>p.category==='pickles').map(p=>`<img src="${p.image}" alt="${p.name} jar">`).join('')}</div></div></div></section>
+  <section class="hero"><div class="container hero-inner"><div class="hero-copy">
+    <div class="hero-rating"><span class="avatar-stack"><span class="avatar" style="background:#2E7D32">R</span><span class="avatar" style="background:#C0392B">A</span><span class="avatar" style="background:#FFC93C;color:#111">P</span></span><span class="hero-rating-text">★★★★★ 4.8/5 · Loved by 1,200+ home cooks</span></div>
+    <span class="eyebrow">Made at home · Shared with joy</span><h1 class="display">Real ingredients.<br>Happier meals.</h1><p>Small-batch pickles with bold, honest flavour. Made slowly with traditional recipes and ingredients your grandmother would recognise.</p>
+    <div class="hero-cta-row"><a href="#/shop" class="btn btn-primary">Shop now</a><a href="#/shop" class="btn btn-secondary">Explore the range</a></div>
+  </div><div class="hero-visual"><span class="hero-ribbon">Bestseller</span><div class="hero-jars">${products.filter(p=>p.category==='pickles').map(p=>`<img src="${p.image}" alt="${p.name} jar">`).join('')}</div></div></div></section>
   ${featureStrip()}
   ${bestSellersCarousel()}
   <section class="section products-wrap"><div class="container"><div class="section-head centered"><span class="eyebrow">Choose your happy</span><h2 class="display">A little pop in every bite</h2><div class="toggle-row"><button class="pill ${state.homeCategory==='pickles'?'active':''}" data-home-cat="pickles">Pickles</button><button class="pill ${state.homeCategory==='bundles'?'active':''}" data-home-cat="bundles">Bundles</button></div></div><div class="products-scroll"><div class="product-grid home-products">${list.map(p=>productCard(p)).join('')}</div></div></div></section>
   ${popCollection()}
   ${infoBanner()}
   <section class="section story"><div class="container story-grid"><div class="story-visual"><div class="photo-slot"><span>Founder / kitchen photo placeholder<br>Drop your image here</span></div></div><div class="story-copy"><span class="eyebrow">The recipe behind the jar</span><h2 class="display">Made with memory.</h2><p>It started with recipes passed around the family table, handwritten in the margins and adjusted by instinct. We bottle that feeling: bright ingredients, patient hands, and food that makes an ordinary meal feel special.</p><a class="text-link" href="#/about">Read our story →</a></div></div></section>
-  ${ugcShowcase()}
+  ${ugcReels()}
+  ${faqSection()}
   ${newsletter()}</main>${footer()}`;
 }
 
@@ -192,16 +233,8 @@ function bind(){
   document.querySelectorAll('[data-add]').forEach(b=>b.addEventListener('click',()=>addToCart(b.dataset.add,Number(b.dataset.qty||1))));
   document.querySelectorAll('[data-home-cat]').forEach(b=>b.addEventListener('click',()=>{state.homeCategory=b.dataset.homeCat;render()}));
   document.querySelectorAll('[data-pop-cat]').forEach(b=>b.addEventListener('click',()=>{state.popCategory=b.dataset.popCat;render()}));
-  const track=document.querySelector('#carousel-track');
-  if(track){
-    document.querySelector('[data-carousel-prev]')?.addEventListener('click',()=>track.scrollBy({left:-track.clientWidth*0.8,behavior:'smooth'}));
-    document.querySelector('[data-carousel-next]')?.addEventListener('click',()=>track.scrollBy({left:track.clientWidth*0.8,behavior:'smooth'}));
-  }
-  const ugcItems=document.querySelectorAll('.ugc-item');
-  if(ugcItems.length){
-    const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.2});
-    ugcItems.forEach(el=>io.observe(el));
-  }
+  document.querySelectorAll('[data-carousel-prev]').forEach(b=>b.addEventListener('click',()=>{const t=document.getElementById(b.dataset.carouselPrev); t?.scrollBy({left:-t.clientWidth*0.8,behavior:'smooth'})}));
+  document.querySelectorAll('[data-carousel-next]').forEach(b=>b.addEventListener('click',()=>{const t=document.getElementById(b.dataset.carouselNext); t?.scrollBy({left:t.clientWidth*0.8,behavior:'smooth'})}));
   document.querySelectorAll('[data-shop-cat]').forEach(b=>b.addEventListener('click',()=>{state.shopCategory=b.dataset.shopCat;render()}));
   document.querySelector('[data-sort]')?.addEventListener('change',e=>{state.sort=e.target.value;render()});
   document.querySelectorAll('[data-size]').forEach(b=>b.addEventListener('click',()=>{state.selectedSize[b.dataset.product]=b.dataset.size;render()}));
