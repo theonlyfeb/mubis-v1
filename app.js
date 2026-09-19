@@ -76,12 +76,15 @@ function productCard(p){ return `<article class="product-card">
   <div class="product-info"><span class="product-kicker">${p.category==='bundles'?'Bundle · Small batch':'Small batch pickle'}</span><h3><a href="#/product/${p.id}">${p.name}</a></h3><span class="price">${money(p.price)}</span></div>
   </article>`; }
 
-function featureStrip(){ return `<section class="feature-strip"><div class="container feature-grid">
-  <div class="feature-item"><span class="feature-icon">✦</span>Small batch production</div>
-  <div class="feature-item"><span class="feature-icon">☀</span>No added preservatives</div>
-  <div class="feature-item"><span class="feature-icon">❋</span>Premium ingredients</div>
-  <div class="feature-item"><span class="feature-icon">→</span>Free shipping over ₹799</div>
-  </div></section>`; }
+function featureStrip(){
+  const set=`<div class="feature-set">
+    <span class="feature-item"><span class="feature-icon">✦</span>Small batch production</span>
+    <span class="feature-item"><span class="feature-icon">☀</span>No added preservatives</span>
+    <span class="feature-item"><span class="feature-icon">❋</span>Premium ingredients</span>
+    <span class="feature-item"><span class="feature-icon">→</span>Free shipping over ₹799</span>
+  </div>`;
+  return `<section class="feature-strip"><div class="feature-track">${set}${set}</div></section>`;
+}
 
 function bestSellersCarousel(){
   const list=products.slice(0,6);
