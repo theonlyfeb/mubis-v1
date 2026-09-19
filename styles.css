@@ -1,13 +1,13 @@
 :root {
-  --forest-green: #1f3d24;
-  --mustard-yellow: #f2c94c;
-  --blush-pink: #f4c9ce;
-  --sage-green: #c9d9b8;
-  --cream: #f7f3e9;
-  --ink-black: #161616;
+  --forest-green: #2E7D32;
+  --mustard-yellow: #F2E7CC;
+  --blush-pink: #E7EFE0;
+  --sage-green: #F2E7CC;
+  --cream: #F7F2E6;
+  --ink-black: #111111;
   --white: #fff;
-  --orange: #ed7045;
-  --blue: #b8dbe4;
+  --orange: #C0392B;
+  --blue: #E7EFE0;
   --border: 2px solid var(--ink-black);
   --shadow: 4px 4px 0 var(--ink-black);
   --display: "Archivo Black", Impact, sans-serif;
