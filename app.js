@@ -1,10 +1,10 @@
 const products = [
-  { id:'beef-pickle', name:'Beef Pickle', image:'./1-product.png', price:349, category:'pickles', color:'#FF8FA3', sizes:['200g','400g','1kg'], tags:['Small Batches','Homemade','Bold Flavour'], description:'Rich, deeply spiced beef pickle made in small batches for a bold, savoury bite.' },
-  { id:'lemon-pickle', name:'Lemon Pickle', image:'./2-product.png', price:299, category:'pickles', color:'#FFC93C', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Bright lemon pieces, traditional spices and a cheerful hit of tang in every spoonful.' },
-  { id:'mango-pickle', name:'Mango Pickle', image:'./3-product.png', price:299, category:'pickles', color:'#7FD1D6', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'A classic made with handpicked mangoes, traditional spices and a whole lot of love.' },
-  { id:'garlic-pickle', name:'Garlic Pickle', image:'./4-product.png', price:329, category:'pickles', color:'#9BE29B', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Punchy whole garlic cloves mellowed with oil, spice and patient small-batch making.' },
-  { id:'mango-lemon-combo', name:'Mango + Lemon Combo', image:'./3-product.png', secondaryImage:'./2-product.png', price:579, category:'bundles', color:'linear-gradient(135deg,#FFC93C 50%,#9BE29B 50%)', sizes:['2 × 200g','2 × 400g'], tags:['Best Value','Small Batches','Homemade'], description:'Two bright classics: handpicked mango and lemon, traditional spices and a whole lot of love.' },
-  { id:'starter-bundle', name:'Starter Bundle', image:'./2-product.png', secondaryImage:'./4-product.png', price:799, category:'bundles', color:'linear-gradient(135deg,#FF8FA3 50%,#7FD1D6 50%)', sizes:['3 × 200g','3 × 400g'], tags:['Most Loved','Small Batches','Homemade'], description:'A joyful little tour of our kitchen, packed with spice and a whole lot of love.' }
+  { id:'beef-pickle', name:'Beef Pickle', image:'./1-product.png', price:349, category:'pickles', color:'#F4F4F2', sizes:['200g','400g','1kg'], tags:['Small Batches','Homemade','Bold Flavour'], description:'Rich, deeply spiced beef pickle made in small batches for a bold, savoury bite.' },
+  { id:'lemon-pickle', name:'Lemon Pickle', image:'./2-product.png', price:299, category:'pickles', color:'#F7F2E6', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Bright lemon pieces, traditional spices and a cheerful hit of tang in every spoonful.' },
+  { id:'mango-pickle', name:'Mango Pickle', image:'./3-product.png', price:299, category:'pickles', color:'#F4F4F2', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'A classic made with handpicked mangoes, traditional spices and a whole lot of love.' },
+  { id:'garlic-pickle', name:'Garlic Pickle', image:'./4-product.png', price:329, category:'pickles', color:'#F7F2E6', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Punchy whole garlic cloves mellowed with oil, spice and patient small-batch making.' },
+  { id:'mango-lemon-combo', name:'Mango + Lemon Combo', image:'./3-product.png', secondaryImage:'./2-product.png', price:579, category:'bundles', color:'linear-gradient(135deg,#F7F2E6 50%,#F4F4F2 50%)', sizes:['2 × 200g','2 × 400g'], tags:['Best Value','Small Batches','Homemade'], description:'Two bright classics: handpicked mango and lemon, traditional spices and a whole lot of love.' },
+  { id:'starter-bundle', name:'Starter Bundle', image:'./2-product.png', secondaryImage:'./4-product.png', price:799, category:'bundles', color:'linear-gradient(135deg,#F4F4F2 50%,#F7F2E6 50%)', sizes:['3 × 200g','3 × 400g'], tags:['Most Loved','Small Batches','Homemade'], description:'A joyful little tour of our kitchen, packed with spice and a whole lot of love.' }
 ];
 
 const state = {
@@ -19,6 +19,7 @@ const state = {
 const app = document.querySelector('#app');
 const icons = {
   menu:'<svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
+  search:'<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>',
   user:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c.6-5 3.3-7 8-7s7.4 2 8 7"/></svg>',
   cart:'<svg viewBox="0 0 24 24"><path d="M3 4h2l2.3 11h10.9l2-7H6.1M9 20h.01M17 20h.01"/></svg>'
 };
@@ -34,31 +35,31 @@ function toast(message){ const el=document.querySelector('#toast'); el.textConte
 
 function header(){
   const current=route();
-  return `<header class="site-header">
-    <a href="#/" class="logo" aria-label="Mubi's home"><img src="./logo-mark.png" alt="Mubi's Kitchen"></a>
-    <nav class="main-nav" id="nav"><a class="${current.startsWith('/shop')?'active':''}" href="#/shop">Shop</a><a class="${current==='/about'?'active':''}" href="#/about">About</a><a class="${current==='/contact'?'active':''}" href="#/contact">Contact</a></nav>
-    <div class="header-actions">
+  const navLink=(path,label)=>`<a class="${current===path||(path==='/shop'&&current.startsWith('/shop'))?'active':''}" href="#${path}">${label}</a>`;
+  return `<div class="announce">Free shipping over ₹799 · Small batches, shipped within 48h</div>
+  <div class="header-wrap">
+  <header class="site-header">
+    <div class="header-side header-left">
       <button class="icon-button menu-btn" data-menu aria-label="Open menu">${icons.menu}</button>
+      <button class="icon-button" aria-label="Search" onclick="window.showDemo('Search is coming soon')">${icons.search}</button>
+    </div>
+    <a href="#/" class="logo" aria-label="Mubi's home"><img src="./logo-mark.png" alt="Mubi's Kitchen"></a>
+    <div class="header-side header-right">
       <button class="icon-button account-btn" aria-label="Account" onclick="window.showDemo('Account sign-in will be connected later')">${icons.user}</button>
       <a class="icon-button" href="#/cart" aria-label="Cart">${icons.cart}<span class="cart-count" ${cartCount()?'':'hidden'}>${cartCount()}</span></a>
     </div>
-  </header>${marquee()}`;
-}
-
-function marquee(){
-  const set='<div class="marquee-set"><span>Small batch production</span><i class="mini-mark"><img src="./Firefly.png" alt=""></i><span>No added preservatives</span><i class="mini-mark"><img src="./Firefly.png" alt=""></i><span>Premium ingredients</span><i class="mini-mark"><img src="./Firefly.png" alt=""></i></div>';
-  return `<div class="marquee"><div class="marquee-track">${set}${set}</div></div>`;
+  </header>
+  <nav class="main-nav" id="nav">${navLink('/shop','Shop')}${navLink('/shop?cat=pickles','Pickles')}${navLink('/shop?cat=bundles','Bundles')}${navLink('/about','About')}${navLink('/contact','Contact')}</nav>
+  </div>`;
 }
 
 function footer(){ return `<footer class="site-footer"><div class="footer-shell">
   <div class="footer-main">
     <div class="footer-brand"><a href="#/" class="logo footer-logo"><img src="./logo-mark.png" alt="Mubi's Kitchen"></a><p>Homemade flavour.<br>Made to make meals happier.</p><span class="footer-origin">Made with love in India ♥</span></div>
-    <div class="footer-manifesto">A bite of home.<br>A spoonful of memories.<br>Mubi's has it all.</div>
     <div><h3 class="footer-title">Explore</h3><div class="footer-links"><a href="#/">Home</a><a href="#/shop">Shop all</a><a href="#/about">Our story</a><a href="#/contact">Contact</a></div></div>
     <div><h3 class="footer-title">Good to know</h3><div class="footer-links"><a href="#/contact">FAQ</a><a href="#/contact">Shipping</a><a href="#/contact">Refunds & returns</a><a href="#/contact">Privacy</a></div></div>
-    <div class="footer-join"><h3 class="footer-title">Join the pickle club</h3><p>Fresh drops, recipes and happy little notes from our kitchen.</p><form class="footer-form" data-newsletter><input class="field" type="email" placeholder="Your email" required aria-label="Email"><button class="btn btn-footer" type="submit">Join →</button></form></div>
+    <div class="footer-join"><h3 class="footer-title">Join the pickle club</h3><p>Fresh drops, recipes and happy little notes from our kitchen.</p><form class="footer-form" data-newsletter><input class="field" type="email" placeholder="Your email" required aria-label="Email"><button class="btn btn-footer" type="submit">Join</button></form></div>
   </div>
-  <div class="footer-wordmark" aria-hidden="true"><img src="./use.svg" alt=""></div>
   <div class="footer-bottom"><span>© 2026 Mubi's Kitchen. Demo storefront.</span><span>UPI · VISA · MASTERCARD · RUPAY</span></div>
   </div></footer>`; }
 
@@ -66,27 +67,37 @@ function productImage(p, className='product-image'){
   return `<img class="${className}" src="${p.image}" alt="${p.name} jar">${p.secondaryImage?`<img class="${className} secondary" src="${p.secondaryImage}" alt="">`:''}`;
 }
 
-function productCard(p,index=0){ return `<article class="product-card">
-  <a href="#/product/${p.id}" class="product-art" style="--card-color:${p.color}" aria-label="View ${p.name}">${productImage(p)}<span class="number">0${index+1}</span><span class="badge">${p.category==='bundles'?'Bundle':'Small batch'}</span></a>
-  <div class="product-info"><h3><a href="#/product/${p.id}">${p.name}</a></h3><p>${p.description}</p><div class="price-row"><span class="price">${money(p.price)}</span><button class="btn btn-secondary mini-add" data-add="${p.id}">Add to cart</button></div></div>
+function productCard(p){ return `<article class="product-card">
+  <a href="#/product/${p.id}" class="product-art" style="--card-color:${p.color}" aria-label="View ${p.name}">
+    ${productImage(p)}
+    <button class="add-fab" aria-label="Add ${p.name} to cart" onclick="event.preventDefault();event.stopPropagation();window.__addToCart('${p.id}')">+</button>
+  </a>
+  <div class="product-info"><span class="product-kicker">${p.category==='bundles'?'Bundle · Small batch':'Small batch pickle'}</span><h3><a href="#/product/${p.id}">${p.name}</a></h3><span class="price">${money(p.price)}</span></div>
   </article>`; }
+
+function featureStrip(){ return `<section class="feature-strip"><div class="container feature-grid">
+  <div class="feature-item"><span class="feature-icon">✦</span>Small batch production</div>
+  <div class="feature-item"><span class="feature-icon">☀</span>No added preservatives</div>
+  <div class="feature-item"><span class="feature-icon">❋</span>Premium ingredients</div>
+  <div class="feature-item"><span class="feature-icon">→</span>Free shipping over ₹799</div>
+  </div></section>`; }
 
 function home(){
   const list=products.filter(p=>p.category===state.homeCategory).slice(0,4);
   return `${header()}<main id="main">
-  <section class="hero"><div class="container hero-inner"><div class="hero-copy"><span class="eyebrow">Made at home · Shared with joy</span><h1 class="display">Real ingredients.<br><span>Happier meals.</span></h1><p>Small-batch pickles with bold, honest flavour. Made slowly with traditional recipes and ingredients your grandmother would recognise.</p><a href="#/shop" class="btn btn-primary">Shop the jars →</a></div><div class="hero-visual"><div class="ingredient one"></div><div class="ingredient two"></div><div class="hero-jars">${products.filter(p=>p.category==='pickles').map(p=>`<img src="${p.image}" alt="${p.name} jar">`).join('')}</div><div class="scribble">100% homemade-ish!</div></div></div></section>
-  <section class="section products-wrap"><div class="container"><div class="section-head"><div><span class="eyebrow">Choose your happy</span><h2 class="display">A little pop<br>in every bite.</h2></div><div class="toggle-row"><button class="pill ${state.homeCategory==='pickles'?'active':''}" data-home-cat="pickles">Pickles</button><button class="pill ${state.homeCategory==='bundles'?'active':''}" data-home-cat="bundles">Bundles</button></div></div><div class="products-scroll"><div class="product-grid home-products">${list.map(productCard).join('')}</div></div></div></section>
-  <section class="section story"><div class="container story-grid"><div class="story-visual"><div class="photo-slot"><span>Founder / kitchen photo placeholder<br>Drop your image here</span></div><div class="round-stamp">Homemade<br>always</div></div><div class="story-copy"><span class="eyebrow">The recipe behind the jar</span><h2 class="display">Made with<br>memory.</h2><p>It started with recipes passed around the family table, handwritten in the margins and adjusted by instinct. We bottle that feeling: bright ingredients, patient hands, and food that makes an ordinary meal feel special.</p><a class="text-link" href="#/about">Read our story →</a></div></div></section>
-  <section class="section trust"><div class="container"><div class="section-head"><h2 class="display">The good stuff.<br>Nothing sneaky.</h2></div><div class="trust-grid"><article class="trust-card"><div class="trust-icon">✦</div><h3>Small batches</h3><p>Made in quantities that let us care about every single jar.</p></article><article class="trust-card"><div class="trust-icon">☀</div><h3>No preservatives</h3><p>Old-school methods and ingredients you can actually pronounce.</p></article><article class="trust-card"><div class="trust-icon">❋</div><h3>Premium ingredients</h3><p>Seasonal produce, fragrant spices, and absolutely no shortcuts.</p></article></div></div></section>
+  <section class="hero"><div class="container hero-inner"><div class="hero-copy"><span class="eyebrow">Made at home · Shared with joy</span><h1 class="display">Real ingredients.<br>Happier meals.</h1><p>Small-batch pickles with bold, honest flavour. Made slowly with traditional recipes and ingredients your grandmother would recognise.</p><a href="#/shop" class="btn btn-primary">Shop now</a></div><div class="hero-visual"><div class="hero-jars">${products.filter(p=>p.category==='pickles').map(p=>`<img src="${p.image}" alt="${p.name} jar">`).join('')}</div></div></div></section>
+  ${featureStrip()}
+  <section class="section products-wrap"><div class="container"><div class="section-head centered"><span class="eyebrow">Choose your happy</span><h2 class="display">A little pop in every bite</h2><div class="toggle-row"><button class="pill ${state.homeCategory==='pickles'?'active':''}" data-home-cat="pickles">Pickles</button><button class="pill ${state.homeCategory==='bundles'?'active':''}" data-home-cat="bundles">Bundles</button></div></div><div class="products-scroll"><div class="product-grid home-products">${list.map(p=>productCard(p)).join('')}</div></div></div></section>
+  <section class="section story"><div class="container story-grid"><div class="story-visual"><div class="photo-slot"><span>Founder / kitchen photo placeholder<br>Drop your image here</span></div></div><div class="story-copy"><span class="eyebrow">The recipe behind the jar</span><h2 class="display">Made with memory.</h2><p>It started with recipes passed around the family table, handwritten in the margins and adjusted by instinct. We bottle that feeling: bright ingredients, patient hands, and food that makes an ordinary meal feel special.</p><a class="text-link" href="#/about">Read our story →</a></div></div></section>
   ${newsletter()}</main>${footer()}`;
 }
 
-function newsletter(){ return `<section class="newsletter"><div class="container newsletter-inner"><h2 class="display">Good news.<br>Freshly bottled.</h2><form class="newsletter-form" data-newsletter><input class="field" type="email" placeholder="you@email.com" required aria-label="Email address"><button class="btn btn-light" type="submit">Subscribe →</button></form></div></section>`; }
+function newsletter(){ return `<section class="newsletter"><div class="container newsletter-inner"><span class="eyebrow">Good news</span><h2 class="display">Freshly bottled, straight to your inbox</h2><form class="newsletter-form" data-newsletter><input class="field" type="email" placeholder="you@email.com" required aria-label="Email address"><button class="btn btn-primary" type="submit">Subscribe</button></form></div></section>`; }
 
 function shop(){
   let list=state.shopCategory==='all'?[...products]:products.filter(p=>p.category===state.shopCategory);
   if(state.sort==='low') list.sort((a,b)=>a.price-b.price); if(state.sort==='high') list.sort((a,b)=>b.price-a.price); if(state.sort==='new') list.reverse();
-  return `${header()}<main id="main"><section class="page-hero yellow"><div class="container"><span class="eyebrow">The pantry shelf</span><h1 class="display">Shop all.</h1><p>Pick one favourite or invite the whole gang. Every jar is made in a small batch and packed with big personality.</p></div></section><section class="section"><div class="container"><div class="shop-toolbar"><div class="toggle-row">${[['all','All'],['pickles','Pickles'],['bundles','Combos']].map(([v,l])=>`<button class="pill ${state.shopCategory===v?'active':''}" data-shop-cat="${v}">${l}</button>`).join('')}</div><select class="sort-select" data-sort aria-label="Sort products"><option value="featured" ${state.sort==='featured'?'selected':''}>Featured</option><option value="low" ${state.sort==='low'?'selected':''}>Price: Low to high</option><option value="high" ${state.sort==='high'?'selected':''}>Price: High to low</option><option value="new" ${state.sort==='new'?'selected':''}>Newest</option></select></div><div class="product-grid shop-products">${list.map(productCard).join('')}</div></div></section></main>${footer()}`;
+  return `${header()}<main id="main"><section class="page-hero"><div class="container"><span class="eyebrow">The pantry shelf</span><h1 class="display">Shop all.</h1><p>Pick one favourite or invite the whole gang. Every jar is made in a small batch and packed with big personality.</p></div></section><section class="section"><div class="container"><div class="shop-toolbar"><div class="toggle-row">${[['all','All'],['pickles','Pickles'],['bundles','Combos']].map(([v,l])=>`<button class="pill ${state.shopCategory===v?'active':''}" data-shop-cat="${v}">${l}</button>`).join('')}</div><select class="sort-select" data-sort aria-label="Sort products"><option value="featured" ${state.sort==='featured'?'selected':''}>Featured</option><option value="low" ${state.sort==='low'?'selected':''}>Price: Low to high</option><option value="high" ${state.sort==='high'?'selected':''}>Price: High to low</option><option value="new" ${state.sort==='new'?'selected':''}>Newest</option></select></div><div class="product-grid shop-products">${list.map(productCard).join('')}</div></div></section></main>${footer()}`;
 }
 
 function productPage(id){
@@ -101,7 +112,7 @@ function accordion(){ return `<div class="accordion">${[
 ].map(([h,c],i)=>`<div class="accordion-item ${i===0?'open':''}"><button class="accordion-button"><span>${h}</span><span class="plus">＋</span></button><div class="accordion-content">${c}</div></div>`).join('')}</div>`; }
 
 function cartPage(){
-  return `${header()}<main id="main"><section class="page-hero pink"><div class="container"><span class="eyebrow">Your tasty stash</span><h1 class="display">Your cart.</h1></div></section><section class="section"><div class="container">${state.cart.length?`<div class="cart-layout"><div class="cart-list">${state.cart.map(cartItem).join('')}</div>${summary(true)}</div>`:`<div class="empty"><div><div class="empty-art">EMPTY<br>JAR</div><h2 class="display">Nothing here. Yet.</h2><p>Your future meals are waiting for a little pickle-powered joy.</p><a href="#/shop" class="btn btn-primary">Find your flavour →</a></div></div>`}</div></section></main>${footer()}`;
+  return `${header()}<main id="main"><section class="page-hero"><div class="container"><span class="eyebrow">Your tasty stash</span><h1 class="display">Your cart.</h1></div></section><section class="section"><div class="container">${state.cart.length?`<div class="cart-layout"><div class="cart-list">${state.cart.map(cartItem).join('')}</div>${summary(true)}</div>`:`<div class="empty"><div><div class="empty-art">EMPTY<br>JAR</div><h2 class="display">Nothing here. Yet.</h2><p>Your future meals are waiting for a little pickle-powered joy.</p><a href="#/shop" class="btn btn-primary">Find your flavour →</a></div></div>`}</div></section></main>${footer()}`;
 }
 function cartItem(item){ const p=products.find(x=>x.id===item.id); return `<article class="cart-item"><div class="cart-thumb" style="--card-color:${p.color}"><img src="${p.image}" alt="${p.name} jar"></div><div><h3>${p.name}</h3><p>${item.size}</p><div class="stepper" style="max-width:120px"><button data-cart-minus="${item.key}">−</button><span>${item.qty}</span><button data-cart-plus="${item.key}">+</button></div><button class="remove" data-remove="${item.key}">Remove</button></div><div class="price">${money(item.price*item.qty)}</div></article>`; }
 function summary(showButton=false){ return `<aside class="summary"><h2>Order summary</h2>${state.cart.map(i=>{const p=products.find(x=>x.id===i.id);return `<div class="order-mini"><span>${p.name} × ${i.qty}</span><b>${money(i.price*i.qty)}</b></div>`}).join('')}<div class="summary-line"><span>Subtotal</span><b>${money(subtotal())}</b></div><div class="summary-line"><span>Shipping</span><span>Calculated at checkout</span></div><div class="summary-line total"><span>Total</span><span>${money(subtotal())}</span></div>${showButton?'<a href="#/checkout" class="btn btn-primary btn-block">Proceed to checkout →</a>':''}</aside>`; }
@@ -110,9 +121,9 @@ function checkout(){ if(!state.cart.length){ go('/cart'); return ''; } return `$
 
 function confirmation(){ return `${header()}<main id="main"><section class="confirmation"><div class="confirmation-card"><span class="eyebrow">The good stuff is on its way</span><h1 class="display">Order<br>placed!</h1><p>Thank you for giving our little jars a spot at your table. Your demo order number is <strong>#MUBI${Math.floor(1000+Math.random()*8999)}</strong>.</p><a href="#/" class="btn btn-light">Back to home →</a><div class="botanical"></div></div></section></main>`; }
 
-function about(){ return `${header()}<main id="main"><section class="page-hero pink"><div class="container"><span class="eyebrow">Pull up a chair</span><h1 class="display">Our story.</h1><p>Family recipes, loud flavours and the happy belief that everyday food deserves a little celebration.</p></div></section><section class="section"><div class="container about-grid"><div><span class="eyebrow">From one kitchen to many</span><h2 class="display">It began with a handwritten recipe.</h2><p>Mubi's Kitchen grew from the kind of food memories that stay with you: mangoes drying in summer light, spices toasted by instinct, jars lined up on a kitchen shelf. We make each batch with that same closeness and care.</p><p>Our promise is simple—real produce, traditional methods and flavour that earns its place on your table.</p></div><div class="collage"><div class="photo-slot"><span>Founder portrait placeholder</span></div><div class="photo-slot"><span>Kitchen process placeholder</span></div></div></div></section><section class="section trust"><div class="container"><div class="trust-grid"><article class="trust-card"><div class="trust-icon">✦</div><h3>Made slowly</h3><p>Patient recipes, careful hands and no rushed batches.</p></article><article class="trust-card"><div class="trust-icon">☀</div><h3>Kept honest</h3><p>No added preservatives and no unnecessary extras.</p></article><article class="trust-card"><div class="trust-icon">❋</div><h3>Shared happily</h3><p>Food made to bring a little joy to everyday meals.</p></article></div></div></section></main>${footer()}`; }
+function about(){ return `${header()}<main id="main"><section class="page-hero"><div class="container"><span class="eyebrow">Pull up a chair</span><h1 class="display">Our story.</h1><p>Family recipes, loud flavours and the happy belief that everyday food deserves a little celebration.</p></div></section><section class="section"><div class="container about-grid"><div><span class="eyebrow">From one kitchen to many</span><h2 class="display">It began with a handwritten recipe.</h2><p>Mubi's Kitchen grew from the kind of food memories that stay with you: mangoes drying in summer light, spices toasted by instinct, jars lined up on a kitchen shelf. We make each batch with that same closeness and care.</p><p>Our promise is simple—real produce, traditional methods and flavour that earns its place on your table.</p></div><div class="collage"><div class="photo-slot"><span>Founder portrait placeholder</span></div><div class="photo-slot"><span>Kitchen process placeholder</span></div></div></div></section><section class="section trust"><div class="container"><div class="trust-grid"><article class="trust-card"><div class="trust-icon">✦</div><h3>Made slowly</h3><p>Patient recipes, careful hands and no rushed batches.</p></article><article class="trust-card"><div class="trust-icon">☀</div><h3>Kept honest</h3><p>No added preservatives and no unnecessary extras.</p></article><article class="trust-card"><div class="trust-icon">❋</div><h3>Shared happily</h3><p>Food made to bring a little joy to everyday meals.</p></article></div></div></section></main>${footer()}`; }
 
-function contact(){ return `${header()}<main id="main"><section class="page-hero yellow"><div class="container"><span class="eyebrow">Questions, compliments, pickle chat</span><h1 class="display">Say hello.</h1></div></section><section class="section"><div class="container contact-grid"><form class="form-card" data-contact><h2>Send us a note</h2><div class="form-grid"><div class="form-group"><label for="name">Name</label><input class="field" id="name" required></div><div class="form-group"><label for="contact-email">Email</label><input class="field" id="contact-email" type="email" required></div><div class="form-group full"><label for="message">Message</label><textarea class="field" id="message" rows="7" required placeholder="What's on your mind?"></textarea></div><div class="form-group full"><button class="btn btn-secondary" type="submit">Send message →</button></div></div></form><aside class="contact-card"><h2>Find us</h2><div class="contact-line"><span class="eyebrow">Email</span><p>hello@mubiskitchen.demo</p></div><div class="contact-line"><span class="eyebrow">Kitchen hours</span><p>Monday–Saturday<br>10:00–18:00 IST</p></div><div class="contact-line"><span class="eyebrow">Social</span><p>@mubiskitchen ↗</p></div><p><small>Placeholder contact details for this demo.</small></p></aside></div></section></main>${footer()}`; }
+function contact(){ return `${header()}<main id="main"><section class="page-hero"><div class="container"><span class="eyebrow">Questions, compliments, pickle chat</span><h1 class="display">Say hello.</h1></div></section><section class="section"><div class="container contact-grid"><form class="form-card" data-contact><h2>Send us a note</h2><div class="form-grid"><div class="form-group"><label for="name">Name</label><input class="field" id="name" required></div><div class="form-group"><label for="contact-email">Email</label><input class="field" id="contact-email" type="email" required></div><div class="form-group full"><label for="message">Message</label><textarea class="field" id="message" rows="7" required placeholder="What's on your mind?"></textarea></div><div class="form-group full"><button class="btn btn-secondary" type="submit">Send message →</button></div></div></form><aside class="contact-card"><h2>Find us</h2><div class="contact-line"><span class="eyebrow">Email</span><p>hello@mubiskitchen.demo</p></div><div class="contact-line"><span class="eyebrow">Kitchen hours</span><p>Monday–Saturday<br>10:00–18:00 IST</p></div><div class="contact-line"><span class="eyebrow">Social</span><p>@mubiskitchen ↗</p></div><p><small>Placeholder contact details for this demo.</small></p></aside></div></section></main>${footer()}`; }
 
 function render(){
   const path=route(); let html='';
@@ -142,5 +153,6 @@ function bind(){
 }
 
 window.showDemo=toast;
+window.__addToCart=addToCart;
 window.addEventListener('hashchange',render);
 render();
