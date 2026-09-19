@@ -124,6 +124,7 @@ function infoBanner(){ return `<section class="info-banner"><div class="containe
   </div></section>`; }
 
 const reelCaptions=['Morning pickle mood 🌞','Small-batch magic ✨','Straight from the jar','Grandma-approved 👵','Weekend snack sorted'];
+const reelCustomers=['Ritika S.','Aman K.','Priya M.','Farah I.','Devika R.'];
 function ugcReels(){
   const list=products.slice(0,5);
   return `<section class="section reels-section"><div class="container">
@@ -133,14 +134,14 @@ function ugcReels(){
     <button class="arrow-btn reels-arrow left" data-carousel-prev="reels-track" aria-label="Previous">←</button>
     <div class="reel-track" id="reels-track">${list.map((p,i)=>`<div class="reel-item">
         <span class="reel-caption">${reelCaptions[i%reelCaptions.length]}</span>
+        <div class="reel-photo"><span>${reelCustomers[i%reelCustomers.length]}<br>customer photo placeholder</span></div>
         <button class="reel-play" aria-label="Play video">▶</button>
-        <img src="${p.image}" alt="${p.name} in use">
-        <a href="#/product/${p.id}" class="reel-tag"><img src="${p.image}" alt=""><span>${p.name}<br><b>${money(p.price)}</b></span></a>
+        <a href="#/product/${p.id}" class="reel-tag"><span class="reel-tag-avatar">${p.name.charAt(0)}</span><span>${p.name}<br><b>${money(p.price)}</b></span></a>
       </div>`).join('')}</div>
     <button class="arrow-btn reels-arrow right" data-carousel-next="reels-track" aria-label="Next">→</button>
     <div class="testimonial-card">
       <button class="testimonial-close" aria-label="Dismiss" onclick="this.closest('.testimonial-card').style.display='none'">×</button>
-      <img class="testimonial-thumb" src="./1-product.png" alt="Beef Pickle">
+      <span class="testimonial-thumb">R</span>
       <div class="testimonial-body">
         <span class="testimonial-name">Ritika S. <span class="testimonial-stars">★★★★★</span></span>
         <p>Tastes just like my grandmother's — the beef pickle disappeared from the fridge in two days. Ordering three more jars!</p>
@@ -163,7 +164,7 @@ function faqSection(){
       <h2 class="display">Frequently asked questions</h2>
       <div class="accordion faq-accordion">${faqs.map(([q,a],i)=>`<div class="accordion-item ${i===0?'open':''}"><button class="accordion-button"><span>${q}</span><span class="plus">＋</span></button><div class="accordion-content">${a}</div></div>`).join('')}</div>
     </div>
-    <div class="faq-visual"><img src="./1.png" alt="Mubi's Kitchen jar"></div>
+    <div class="faq-visual"><div class="photo-slot"><span>Happy customer photo<br>placeholder</span></div></div>
   </div></section>`;
 }
 
