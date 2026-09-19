@@ -1,10 +1,10 @@
 const products = [
-  { id:'beef-pickle', name:'Beef Pickle', image:'./1-product.png', price:349, category:'pickles', color:'#E7EFE0', sizes:['200g','400g','1kg'], tags:['Small Batches','Homemade','Bold Flavour'], description:'Rich, deeply spiced beef pickle made in small batches for a bold, savoury bite.' },
-  { id:'lemon-pickle', name:'Lemon Pickle', image:'./2-product.png', price:299, category:'pickles', color:'#F2E7CC', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Bright lemon pieces, traditional spices and a cheerful hit of tang in every spoonful.' },
-  { id:'mango-pickle', name:'Mango Pickle', image:'./3-product.png', price:299, category:'pickles', color:'#E7EFE0', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'A classic made with handpicked mangoes, traditional spices and a whole lot of love.' },
-  { id:'garlic-pickle', name:'Garlic Pickle', image:'./4-product.png', price:329, category:'pickles', color:'#F2E7CC', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Punchy whole garlic cloves mellowed with oil, spice and patient small-batch making.' },
-  { id:'mango-lemon-combo', name:'Mango + Lemon Combo', image:'./3-product.png', secondaryImage:'./2-product.png', price:579, category:'bundles', color:'linear-gradient(135deg,#F2E7CC 50%,#E7EFE0 50%)', sizes:['2 × 200g','2 × 400g'], tags:['Best Value','Small Batches','Homemade'], description:'Two bright classics: handpicked mango and lemon, traditional spices and a whole lot of love.' },
-  { id:'starter-bundle', name:'Starter Bundle', image:'./2-product.png', secondaryImage:'./4-product.png', price:799, category:'bundles', color:'linear-gradient(135deg,#E7EFE0 50%,#F2E7CC 50%)', sizes:['3 × 200g','3 × 400g'], tags:['Most Loved','Small Batches','Homemade'], description:'A joyful little tour of our kitchen, packed with spice and a whole lot of love.' }
+  { id:'beef-pickle', name:'Beef Pickle', image:'./1-product.png', price:349, category:'pickles', color:'#F1F1EE', sizes:['200g','400g','1kg'], tags:['Small Batches','Homemade','Bold Flavour'], description:'Rich, deeply spiced beef pickle made in small batches for a bold, savoury bite.' },
+  { id:'lemon-pickle', name:'Lemon Pickle', image:'./2-product.png', price:299, category:'pickles', color:'#EDEDE9', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Bright lemon pieces, traditional spices and a cheerful hit of tang in every spoonful.' },
+  { id:'mango-pickle', name:'Mango Pickle', image:'./3-product.png', price:299, category:'pickles', color:'#F1F1EE', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'A classic made with handpicked mangoes, traditional spices and a whole lot of love.' },
+  { id:'garlic-pickle', name:'Garlic Pickle', image:'./4-product.png', price:329, category:'pickles', color:'#EDEDE9', sizes:['200g','400g','1kg'], tags:['No Preservatives','Small Batches','Homemade'], description:'Punchy whole garlic cloves mellowed with oil, spice and patient small-batch making.' },
+  { id:'mango-lemon-combo', name:'Mango + Lemon Combo', image:'./3-product.png', secondaryImage:'./2-product.png', price:579, category:'bundles', color:'linear-gradient(135deg,#EDEDE9 50%,#F1F1EE 50%)', sizes:['2 × 200g','2 × 400g'], tags:['Best Value','Small Batches','Homemade'], description:'Two bright classics: handpicked mango and lemon, traditional spices and a whole lot of love.' },
+  { id:'starter-bundle', name:'Starter Bundle', image:'./2-product.png', secondaryImage:'./4-product.png', price:799, category:'bundles', color:'linear-gradient(135deg,#F1F1EE 50%,#EDEDE9 50%)', sizes:['3 × 200g','3 × 400g'], tags:['Most Loved','Small Batches','Homemade'], description:'A joyful little tour of our kitchen, packed with spice and a whole lot of love.' }
 ];
 
 const state = {
@@ -35,7 +35,7 @@ function toast(message){ const el=document.querySelector('#toast'); el.textConte
 function header(){
   const current=route();
   return `<header class="site-header">
-    <a href="#/" class="logo" aria-label="Mubi's home"><img src="./Firefly.png" alt="Mubi's"></a>
+    <a href="#/" class="logo" aria-label="Mubi's home"><img src="./logo-mark.png" alt="Mubi's Kitchen"></a>
     <nav class="main-nav" id="nav"><a class="${current.startsWith('/shop')?'active':''}" href="#/shop">Shop</a><a class="${current==='/about'?'active':''}" href="#/about">About</a><a class="${current==='/contact'?'active':''}" href="#/contact">Contact</a></nav>
     <div class="header-actions">
       <button class="icon-button menu-btn" data-menu aria-label="Open menu">${icons.menu}</button>
@@ -52,7 +52,7 @@ function marquee(){
 
 function footer(){ return `<footer class="site-footer"><div class="footer-shell">
   <div class="footer-main">
-    <div class="footer-brand"><a href="#/" class="logo footer-logo"><img src="./Firefly.png" alt="Mubi's"></a><p>Homemade flavour.<br>Made to make meals happier.</p><span class="footer-origin">Made with love in India ♥</span></div>
+    <div class="footer-brand"><a href="#/" class="logo footer-logo"><img src="./logo-mark.png" alt="Mubi's Kitchen"></a><p>Homemade flavour.<br>Made to make meals happier.</p><span class="footer-origin">Made with love in India ♥</span></div>
     <div class="footer-manifesto">A bite of home.<br>A spoonful of memories.<br>Mubi's has it all.</div>
     <div><h3 class="footer-title">Explore</h3><div class="footer-links"><a href="#/">Home</a><a href="#/shop">Shop all</a><a href="#/about">Our story</a><a href="#/contact">Contact</a></div></div>
     <div><h3 class="footer-title">Good to know</h3><div class="footer-links"><a href="#/contact">FAQ</a><a href="#/contact">Shipping</a><a href="#/contact">Refunds & returns</a><a href="#/contact">Privacy</a></div></div>
